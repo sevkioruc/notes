@@ -37,6 +37,7 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   data() {
     return {
@@ -50,6 +51,15 @@ export default {
   methods: {
     onSubmit(event) {
       event.preventDefault();
+      const newUser = {
+        email: this.form.email,
+        username: this.form.username,
+        password: this.form.password,
+      };
+      axios
+        .post("http://localhost:3000/register", newUser)
+        .then(() => {})
+        .catch(() => {});
     },
   },
 };
