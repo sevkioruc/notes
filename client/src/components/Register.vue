@@ -58,8 +58,12 @@ export default {
       };
       axios
         .post("http://localhost:3000/register", newUser)
-        .then(() => {})
-        .catch(() => {});
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
   },
 };

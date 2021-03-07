@@ -5,10 +5,15 @@ module.exports = (app) => {
 	app.post('/register', (req, res, next) => {
 		const newUser = new User({
 			email: req.body.email,
-			name: req.body.name,
+			username: req.body.username,
 			password: bcrypt.hashSync(req.body.password, 10)
 		})
 
-		console.log(newUser);
+		newUser.save(err => {
+			if (err) {
+				return res.status(400).json({ message: 'Error' });
+			}
+			return res.status(200).json({ message: 'Register success' });
+		});
 	});
 };

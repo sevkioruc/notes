@@ -10,7 +10,7 @@ const app = express();
 
 mongoose.connect(process.env.mongoURI, {
 	useNewUrlParser: true,
-	useUnifiedTopology: true
+	useUnifiedTopology: true,
 })
 	.then(() => {
 		console.log('Connected to DB');
@@ -22,6 +22,8 @@ mongoose.connect(process.env.mongoURI, {
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+require('./routes/authRoutes')(app);
 
 const port = process.env.PORT || 5000;
 
