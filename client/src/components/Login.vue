@@ -1,19 +1,11 @@
 <template>
   <b-container fluid class="container">
-    <b-form class="register-form" @submit="onSubmit">
+    <b-form class="login-form" @submit="onSubmit">
       <b-form-group class="mb-3">
         <b-form-input
           v-model="form.email"
           type="email"
           placeholder="Email"
-          required
-        ></b-form-input>
-      </b-form-group>
-
-      <b-form-group class="mb-3">
-        <b-form-input
-          v-model="form.username"
-          placeholder="Username"
           required
         ></b-form-input>
       </b-form-group>
@@ -29,7 +21,7 @@
 
       <div class="d-flex">
         <b-button class="ml-auto" type="submit" variant="primary">
-          Register
+          Login
         </b-button>
       </div>
     </b-form>
@@ -43,7 +35,6 @@ export default {
     return {
       form: {
         email: "",
-        username: "",
         password: "",
       },
     };
@@ -51,30 +42,38 @@ export default {
   methods: {
     onSubmit(event) {
       event.preventDefault();
-      const newUser = {
+
+      const user = {
         email: this.form.email,
-        username: this.form.username,
         password: this.form.password,
       };
+
       axios
-        .post("http://localhost:3000/register", newUser)
+        .post("http://localhost:3000/login", user)
         .then((res) => {
-          console.log(res);
-          this.$router.push("/login");
+          if (res.status === 200) {
+            localStorage.setItem("token", res.data.token);
+            this.$router.push("/");
+          }
         })
         .catch((err) => {
           console.log(err);
         });
     },
   },
+  created() {
+    if (localStorage.getItem("token") === null) {
+      this.$router.push("/login");
+    }
+  },
 };
 </script>
 
-<style scoped>
+<style>
 .container {
   text-align: center;
 }
-.register-form {
+.login-form {
   margin-top: 100px;
 }
 </style>

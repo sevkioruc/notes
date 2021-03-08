@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Register from '../components/Register';
 import Homepage from '../components/Homepage';
+import Login from '../components/Login';
 
 Vue.use(Router)
 
@@ -15,6 +16,10 @@ export default new Router({
 		{
 			path: '/register',
 			component: Register
+		},
+		{
+			path: '/login',
+			component: Login
 		}
 	]
 })
