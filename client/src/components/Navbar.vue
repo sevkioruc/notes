@@ -6,8 +6,12 @@
     <b-collapse id="nav-collapse" is-nav>
       <b-navbar-nav class="ml-auto">
         <b-navbar-nav>
-          <b-nav-item to="/login">Login</b-nav-item>
-          <b-nav-item to="/register">Register</b-nav-item>
+          <b-nav-item to="/login" :class="loginAndRegisterClass"
+            >Login</b-nav-item
+          >
+          <b-nav-item to="/register" :class="loginAndRegisterClass"
+            >Register</b-nav-item
+          >
           <b-nav-item :class="logoutClass">Logout</b-nav-item>
         </b-navbar-nav>
       </b-navbar-nav>
@@ -21,9 +25,14 @@ export default {
     logout() {},
   },
   computed: {
+    loginAndRegisterClass() {
+      return {
+        "d-none": this.$store.getters.isAuthenticated,
+      };
+    },
     logoutClass() {
       return {
-        "d-none": false,
+        "d-none": !this.$store.getters.isAuthenticated,
       };
     },
   },
