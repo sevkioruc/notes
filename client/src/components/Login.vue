@@ -42,7 +42,9 @@ export default {
   methods: {
     onSubmit(event) {
       event.preventDefault();
-      this.$store.dispatch("login", { ...this.form });
+      this.$store.dispatch("login", { ...this.form }).then(() => {
+        this.$router.push("/notes");
+      });
     },
   },
 };

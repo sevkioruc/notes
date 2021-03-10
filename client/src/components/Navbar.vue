@@ -1,7 +1,7 @@
 <template>
   <b-navbar toggleable="lg" type="dark" variant="info">
     <b-navbar-nav>
-      <b-nav-item href="#">Homepage</b-nav-item>
+      <b-nav-item to="/notes">Notes</b-nav-item>
     </b-navbar-nav>
     <b-collapse id="nav-collapse" is-nav>
       <b-navbar-nav class="ml-auto">

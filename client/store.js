@@ -23,7 +23,8 @@ const store = new Vuex.Store({
 				username: authData.username,
 				password: authData.password,
 			};
-			axios
+
+			return axios
 				.post("http://localhost:3000/register", newUser)
 				.then((res) => {
 					console.log(res);
@@ -38,7 +39,7 @@ const store = new Vuex.Store({
 				password: authData.password,
 			};
 
-			axios.post("http://localhost:3000/login", user)
+			return axios.post("http://localhost:3000/login", user)
 				.then((res) => {
 					commit('setToken', res.data.token);
 				})

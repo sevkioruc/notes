@@ -51,7 +51,9 @@ export default {
   methods: {
     onSubmit(event) {
       event.preventDefault();
-      this.$store.dispatch("register", { ...this.form });
+      this.$store.dispatch("register", { ...this.form }).then(() => {
+        this.$router.push("/notes");
+      });
     },
   },
 };
