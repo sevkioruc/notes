@@ -8,7 +8,7 @@
         <b-navbar-nav>
           <b-nav-item to="/login">Login</b-nav-item>
           <b-nav-item to="/register">Register</b-nav-item>
-          <b-nav-item>Logout</b-nav-item>
+          <b-nav-item :class="logoutClass">Logout</b-nav-item>
         </b-navbar-nav>
       </b-navbar-nav>
     </b-collapse>
@@ -16,7 +16,18 @@
 </template>
 
 <script>
-export default {};
+export default {
+  methods: {
+    logout() {},
+  },
+  computed: {
+    logoutClass() {
+      return {
+        "d-none": false,
+      };
+    },
+  },
+};
 </script>
 
 <style>
