@@ -4,40 +4,61 @@ const jwt = require('jsonwebtoken');
 
 module.exports = (app) => {
 	app.post('/register', (req, res, next) => {
-		const newUser = new User({
-			email: req.body.email,
-			username: req.body.username,
-			password: bcrypt.hashSync(req.body.password, 10)
-		})
-
-		newUser.save(err => {
-			if (err) {
-				return res.status(400).json({ message: 'Error' });
-			}
-			return res.status(200).json({ message: 'Register success' });
-		});
+		bcrypt.hash(req.body.password, 10)
+			.then(hash => {
+				const user = new User({
+					email: req.body.email,
+					username: req.body.username,
+					password: hash
+				});
+				user.save()
+					.then(user => {
+						res.status(201).json({
+							message: 'User added successfully',
+							user: user
+						});
+					})
+					.catch(err => {
+						res.status(500).json({
+							error: err
+						});
+					});
+			});
 	});
 
 	app.post('/login', (req, res, next) => {
-		User.findOne({ email: req.body.email }, (err, user) => {
-
-			if (err) {
-				return res.status(500).json({ message: err });
-			}
-			if (!user) {
-				return res.status(401).json({ message: 'User not found' });
-			}
-			if (!bcrypt.compareSync(req.body.password, user.password)) {
-				return res.status(400).json({ message: 'Login failed' });
-			}
-
-			let token = jwt.sign({ userId: res._Id }, 'secretkey');
-			return res.status(200).json({
-				message: 'Login success',
-				token: token
+		let fetchedUser;
+		User.findOne({ email: req.body.email })
+			.then(user => {
+				if (!user) {
+					return res.status(401).json({
+						message: 'Authentication failed'
+					});
+				}
+				fetchedUser = user;
+				return bcrypt.compare(req.body.password, user.password);
 			})
-
-		});
+			.then(result => {
+				if (!result) {
+					return res.status(401).json({
+						message: 'Authentication failed'
+					});
+				}
+				const token = jwt.sign(
+					{ username: fetchedUser.username, userId: fetchedUser.id },
+					'secret_this_should_be_longer',
+					{ expiresIn: '1h' }
+				);
+				res.status(200).json({
+					token: token,
+					expiresIn: 3600
+				});
+			})
+			.catch(err => {
+				return res.status(401).json({
+					message: 'Authentication failed'
+				});
+			});
 	});
 
 };
