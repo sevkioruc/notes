@@ -51,20 +51,7 @@ export default {
   methods: {
     onSubmit(event) {
       event.preventDefault();
-      const newUser = {
-        email: this.form.email,
-        username: this.form.username,
-        password: this.form.password,
-      };
-      axios
-        .post("http://localhost:3000/register", newUser)
-        .then((res) => {
-          console.log(res);
-          this.$router.push("/login");
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      this.$store.dispatch("register", { ...this.form });
     },
   },
 };

@@ -42,29 +42,8 @@ export default {
   methods: {
     onSubmit(event) {
       event.preventDefault();
-
-      const user = {
-        email: this.form.email,
-        password: this.form.password,
-      };
-
-      axios
-        .post("http://localhost:3000/login", user)
-        .then((res) => {
-          if (res.status === 200) {
-            localStorage.setItem("token", res.data.token);
-            this.$router.push("/");
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      this.$store.dispatch("login", { ...this.form });
     },
-  },
-  created() {
-    if (localStorage.getItem("token") === null) {
-      this.$router.push("/login");
-    }
   },
 };
 </script>
