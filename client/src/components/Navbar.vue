@@ -12,7 +12,7 @@
           <b-nav-item to="/register" :class="loginAndRegisterClass"
             >Register</b-nav-item
           >
-          <b-nav-item :class="logoutClass">Logout</b-nav-item>
+          <b-nav-item :class="logoutClass" @click="logout">Logout</b-nav-item>
         </b-navbar-nav>
       </b-navbar-nav>
     </b-collapse>
@@ -22,7 +22,10 @@
 <script>
 export default {
   methods: {
-    logout() {},
+    logout() {
+      this.$store.dispatch("logout");
+      this.$router.replace("/");
+    },
   },
   computed: {
     loginAndRegisterClass() {

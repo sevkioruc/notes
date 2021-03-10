@@ -48,6 +48,7 @@ const store = new Vuex.Store({
 				});
 		},
 		logout({ commit, dispatch, state }) {
+			commit('clearToken');
 		}
 	},
 	getters: {
