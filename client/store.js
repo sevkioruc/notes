@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import axios from 'axios';
+import router from './src/router/index';
 
 Vue.use(Vuex);
 
@@ -17,6 +18,16 @@ const store = new Vuex.Store({
 		}
 	},
 	actions: {
+		initAuth({ commit, dispatch }) {
+			let token = localStorage.getItem('token');
+			if (token) {
+				commit('setToken', token);
+				router.push('/notes');
+			} else {
+				router.push('/login');
+				return false;
+			}
+		},
 		register({ commit, dispatch, state }, authData) {
 			const newUser = {
 				email: authData.email,
@@ -42,6 +53,7 @@ const store = new Vuex.Store({
 			return axios.post("http://localhost:3000/login", user)
 				.then((res) => {
 					commit('setToken', res.data.token);
+					localStorage.setItem('token', res.data.token);
 				})
 				.catch((err) => {
 					console.log(err);
@@ -49,6 +61,7 @@ const store = new Vuex.Store({
 		},
 		logout({ commit, dispatch, state }) {
 			commit('clearToken');
+			localStorage.removeItem('token');
 		}
 	},
 	getters: {
