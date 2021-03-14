@@ -1,4 +1,4 @@
-import axios from 'axios';
+import http from '../../src/axios';
 import router from '../../src/router/index';
 
 
@@ -49,8 +49,7 @@ const actions = {
 			password: authData.password,
 		};
 
-		return axios
-			.post("http://localhost:3000/register", newUser)
+		return http.post('/register', newUser)
 			.then((res) => {
 				console.log(res);
 			})
@@ -64,7 +63,7 @@ const actions = {
 			password: authData.password,
 		};
 
-		return axios.post("http://localhost:3000/login", user)
+		return http.post('/login', user)
 			.then((res) => {
 				commit('setToken', res.data.token);
 				localStorage.setItem('token', res.data.token);

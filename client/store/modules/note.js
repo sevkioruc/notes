@@ -1,4 +1,4 @@
-import axios from 'axios';
+import http from '../../src/axios';
 
 
 const state = {
@@ -19,7 +19,7 @@ const getters = {
 
 const actions = {
 	fetchNotes({ commit }) {
-		axios.get('http://localhost:3000/notes')
+		http.get('/notes')
 			.then((res) => {
 				commit('setNotes', res.data.notes);
 			})
