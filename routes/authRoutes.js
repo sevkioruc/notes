@@ -45,8 +45,8 @@ module.exports = (app) => {
 					});
 				}
 				const token = jwt.sign(
-					{ username: fetchedUser.username, userId: fetchedUser.id },
-					'secret_this_should_be_longer',
+					{ email: fetchedUser.email, userId: fetchedUser.id },
+					process.env.TOKEN_SECRET,
 					{ expiresIn: '1h' }
 				);
 				res.status(200).json({
