@@ -5,13 +5,13 @@
     </template>
     <b-col>
       <b-row class="mb-3">
-        <b-input placeholder="Title"></b-input>
+        <b-input placeholder="Title" v-model="note.title"></b-input>
       </b-row>
       <b-row>
         <b-form-textarea
           class="note-area"
           placeholder="Content"
-          v-model="note"
+          v-model="note.content"
         ></b-form-textarea>
       </b-row>
     </b-col>
@@ -22,12 +22,16 @@
 export default {
   data() {
     return {
-      note: "",
+      note: {
+        title: "",
+        content: "",
+      },
     };
   },
   methods: {
-    // TODO
-    saveNote() {},
+    saveNote() {
+      this.$store.dispatch("saveNote", this.note);
+    },
   },
 };
 </script>

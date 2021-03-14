@@ -6,8 +6,8 @@ const state = {
 };
 
 const mutations = {
-	setNotes(state, notes) {
-		state.notes = notes;
+	addNotes(state, notes) {
+		state.notes.push(notes);
 	}
 };
 
@@ -24,6 +24,15 @@ const actions = {
 				commit('setNotes', res.data.notes);
 			})
 			.catch((err) => {
+				console.log(err);
+			});
+	},
+	saveNote({ commit }, note) {
+		http.post('/notes', note)
+			.then(res => {
+				commit('addNotes', res.data)
+			})
+			.catch(err => {
 				console.log(err);
 			});
 	}
