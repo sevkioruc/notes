@@ -4,7 +4,7 @@ import Register from '../components/Register';
 import Homepage from '../components/Homepage';
 import Login from '../components/Login';
 import Notes from '../components/Notes';
-import store from '../../store';
+import store from '../../store/store';
 
 Vue.use(Router)
 
@@ -27,7 +27,7 @@ export default new Router({
 			path: '/notes',
 			component: Notes,
 			beforeEnter(to, from, next) {
-				if (store.getters.isAuthenticated) {
+				if (store.getters['isAuthenticated']) {
 					next();
 				} else {
 					next('/login');
