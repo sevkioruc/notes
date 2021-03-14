@@ -4,11 +4,16 @@
       <b-button variant="danger" @click="ok()"> Save </b-button>
     </template>
     <b-col>
-      <b-form-textarea
-        class="note-area"
-        placeholder="Enter Note"
-        v-model="note"
-      ></b-form-textarea>
+      <b-row class="mb-3">
+        <b-input placeholder="Title"></b-input>
+      </b-row>
+      <b-row>
+        <b-form-textarea
+          class="note-area"
+          placeholder="Content"
+          v-model="note"
+        ></b-form-textarea>
+      </b-row>
     </b-col>
   </b-modal>
 </template>
