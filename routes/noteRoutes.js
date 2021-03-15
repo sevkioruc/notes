@@ -49,4 +49,30 @@ module.exports = app => {
 		}
 	});
 
+	app.put('/notes/:id', verifyToken, async (req, res) => {
+		try {
+			const note = await Note.findOne({
+				'$and':
+					[
+						{ _id: req.params.id },
+						{ user: req.user.userId }
+					]
+			});
+			if (!note) {
+				res.status(401).json({ message: 'Access denied' });
+			} else {
+				note.title = req.body.title;
+				note.content = req.body.content;
+				note.save();
+
+				res.status(200).json({ message: 'Note updated succcessfully', note: note });
+			}
+		} catch (err) {
+			res.send({
+				message: 'Could not updated note'
+			});
+		}
+
+	});
+
 };
