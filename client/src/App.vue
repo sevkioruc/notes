@@ -14,6 +14,7 @@ export default {
   },
   created() {
     this.$store.dispatch("initAuth");
+    this.$store.dispatch("fetchNotes");
   },
 };
 </script>

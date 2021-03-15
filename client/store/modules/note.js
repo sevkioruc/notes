@@ -7,7 +7,9 @@ const state = {
 
 const mutations = {
 	addNotes(state, notes) {
-		state.notes.push(notes);
+		notes.forEach(note => {
+			state.notes.push(note);
+		})
 	}
 };
 
@@ -21,7 +23,7 @@ const actions = {
 	fetchNotes({ commit }) {
 		http.get('/notes')
 			.then((res) => {
-				commit('setNotes', res.data.notes);
+				commit('addNotes', res.data);
 			})
 			.catch((err) => {
 				console.log(err);
