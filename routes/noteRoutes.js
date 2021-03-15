@@ -68,4 +68,17 @@ module.exports = app => {
 			})
 	});
 
+	app.delete('/notes/:id', verifyToken, (req, res) => {
+		Note.deleteOne({ _id: req.params.id, user: req.user.userId })
+			.then(result => {
+				if (result.n > 0) {
+					res.status(200).json({ message: 'Deleted Successfully' });
+				} else {
+					res.status(401).json({ message: 'Not authorized' });
+				}
+			}).catch(err => {
+				res.status(500).json({ err });
+			});
+	});
+
 };
