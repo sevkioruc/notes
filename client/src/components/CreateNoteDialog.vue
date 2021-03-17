@@ -8,7 +8,12 @@
     @hide="clearModal"
   >
     <template #modal-footer="{ ok }">
-      <b-button variant="danger" @click="ok()">{{ buttonText }}</b-button>
+      <b-button v-if="!isFromUptade" variant="danger" @click="ok()"
+        >Save</b-button
+      >
+      <b-button v-if="isFromUptade" variant="info" @click="updateNote"
+        >Update</b-button
+      >
     </template>
     <b-col>
       <b-row class="mb-3">
@@ -34,7 +39,7 @@ export default {
         title: "",
         content: "",
       },
-      buttonText: "Save",
+      isFromUptade: false,
     };
   },
   methods: {
@@ -43,13 +48,16 @@ export default {
     },
     clearModal() {
       this.note = {};
-      this.buttonText = "Save";
+      this.isFromUptade = false;
+    },
+    updateNote() {
+      this.$store.dispatch("updateNote", this.note);
     },
   },
   created() {
     EventBus.$on("updatedNote", (data) => {
       this.note = data.note;
-      this.buttonText = data.buttonText;
+      this.isFromUptade = data.fromUpdate;
     });
   },
 };

@@ -10,6 +10,9 @@ const mutations = {
 		notes.forEach(note => {
 			state.notes.push(note);
 		})
+	},
+	updateNotes(state, note) {
+		console.log(note);
 	}
 };
 
@@ -33,6 +36,16 @@ const actions = {
 		http.post('/notes', note)
 			.then(res => {
 				commit('addNotes', res.data)
+			})
+			.catch(err => {
+				console.log(err);
+			});
+	},
+	updateNote({ commit }, updatedNote) {
+		http.put(`/notes/${updatedNote._id}`, updatedNote)
+			.then(res => {
+				console.log(res.data);
+				// commit('updateNote', res.data.note)
 			})
 			.catch(err => {
 				console.log(err);

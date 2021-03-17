@@ -47,7 +47,7 @@ export default {
   },
   methods: {
     updateNote(note) {
-      EventBus.$emit("updatedNote", { note: note, buttonText: "Update" });
+      EventBus.$emit("updatedNote", { note: note, fromUpdate: true });
     },
   },
 };

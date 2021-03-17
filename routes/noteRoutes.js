@@ -50,10 +50,9 @@ module.exports = app => {
 	});
 
 	app.put('/notes/:id', verifyToken, (req, res) => {
-		const { note } = req.body;
-		const newUpdatedNote = new Note(note);
+		const { title, content } = req.body;
 
-		Note.updateOne({ _id: req.params.id, user: req.user.userId }, newUpdatedNote)
+		Note.updateOne({ _id: req.params.id, user: req.user.userId }, { title, content })
 			.then(result => {
 				if (result.nModified > 0) {
 					res.status(200).json({
