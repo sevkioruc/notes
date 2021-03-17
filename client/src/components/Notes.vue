@@ -2,7 +2,7 @@
   <b-container fluid>
     <b-col>
       <b-row class="mt-3" align-h="end">
-        <b-button v-b-modal.createNoteModal>Create</b-button>
+        <b-button v-b-modal.noteModal>Create</b-button>
         <CreateNoteDialog />
       </b-row>
       <b-row class="mt-3">
@@ -17,8 +17,12 @@
               {{ note.content }}
             </b-row>
             <b-row class="button-wrapper">
-              <b-button class="mr-2 edit-button" variant="warning"
-                >Update</b-button
+              <b-button
+                class="mr-2 edit-button"
+                variant="warning"
+                v-b-modal.noteModal
+                @click="updateNote(note)"
+                >Detail</b-button
               >
               <b-button variant="danger">Remove</b-button>
             </b-row>
@@ -32,12 +36,19 @@
 <script>
 import CreateNoteDialog from "./CreateNoteDialog";
 import { mapGetters } from "vuex";
+import EventBus from "../../event-bus";
+
 export default {
   components: {
     CreateNoteDialog,
   },
   computed: {
     ...mapGetters(["getNotes"]),
+  },
+  methods: {
+    updateNote(note) {
+      EventBus.$emit("updatedNote", { note: note, buttonText: "Update" });
+    },
   },
 };
 </script>

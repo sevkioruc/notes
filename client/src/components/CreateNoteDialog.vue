@@ -1,7 +1,14 @@
 <template>
-  <b-modal id="createNoteModal" size="lg" centered @ok="saveNote">
+  <b-modal
+    id="noteModal"
+    no-close-on-backdrop
+    size="lg"
+    centered
+    @ok="saveNote"
+    @hide="clearModal"
+  >
     <template #modal-footer="{ ok }">
-      <b-button variant="danger" @click="ok()"> Save </b-button>
+      <b-button variant="danger" @click="ok()">{{ buttonText }}</b-button>
     </template>
     <b-col>
       <b-row class="mb-3">
@@ -19,6 +26,7 @@
 </template>
 
 <script>
+import EventBus from "../../event-bus";
 export default {
   data() {
     return {
@@ -26,12 +34,23 @@ export default {
         title: "",
         content: "",
       },
+      buttonText: "Save",
     };
   },
   methods: {
     saveNote() {
       this.$store.dispatch("saveNote", this.note);
     },
+    clearModal() {
+      this.note = {};
+      this.buttonText = "Save";
+    },
+  },
+  created() {
+    EventBus.$on("updatedNote", (data) => {
+      this.note = data.note;
+      this.buttonText = data.buttonText;
+    });
   },
 };
 </script>
