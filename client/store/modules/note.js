@@ -11,8 +11,12 @@ const mutations = {
 			state.notes.push(note);
 		})
 	},
-	updateNotes(state, note) {
-		console.log(note);
+	updateNotes(state, updatedNote) {
+		const noteIndex = state.notes.findIndex(note => note._id === updatedNote._id);
+		if (noteIndex !== -1) {
+			state.notes[noteIndex].title = updatedNote.title;
+			state.notes[noteIndex].content = updatedNote.content;
+		}
 	}
 };
 
@@ -44,8 +48,7 @@ const actions = {
 	updateNote({ commit }, updatedNote) {
 		http.put(`/notes/${updatedNote._id}`, updatedNote)
 			.then(res => {
-				console.log(res.data);
-				// commit('updateNote', res.data.note)
+				commit('updateNotes', updatedNote)
 			})
 			.catch(err => {
 				console.log(err);
