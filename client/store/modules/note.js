@@ -17,7 +17,14 @@ const mutations = {
 			state.notes[noteIndex].title = updatedNote.title;
 			state.notes[noteIndex].content = updatedNote.content;
 		}
+	},
+	removeNote(state, removedNote) {
+		const noteIndex = state.notes.findIndex(note => note._id === removedNote._id);
+		if (noteIndex !== -1) {
+			state.notes.splice(noteIndex, 1);
+		}
 	}
+
 };
 
 const getters = {
@@ -53,6 +60,15 @@ const actions = {
 			.catch(err => {
 				console.log(err);
 			});
+	},
+	removeNote({ commit }, removedNote) {
+		http.delete(`/notes/${removedNote._id}`)
+			.then(res => {
+				commit('removeNote', removedNote);
+			})
+			.catch(err => {
+				console.log(err);
+			})
 	}
 };
 

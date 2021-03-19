@@ -59,6 +59,10 @@ export default {
       this.note = { ...data.note };
       this.isFromUptade = data.fromUpdate;
     });
+    EventBus.$on("updatedNote", (data) => {
+      this.note = { ...data.note };
+      this.isFromUptade = data.fromUpdate;
+    });
   },
 };
 </script>

@@ -24,7 +24,9 @@
                 @click="updateNote(note)"
                 >Detail</b-button
               >
-              <b-button variant="danger">Remove</b-button>
+              <b-button variant="danger" @click="removeNote(note)"
+                >Remove
+              </b-button>
             </b-row>
           </b-card>
         </b-col>
@@ -48,6 +50,9 @@ export default {
   methods: {
     updateNote(note) {
       EventBus.$emit("updatedNote", { note: note, fromUpdate: true });
+    },
+    removeNote(note) {
+      this.$store.dispatch("removeNote", note);
     },
   },
 };
