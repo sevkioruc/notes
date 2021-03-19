@@ -55,7 +55,7 @@ const actions = {
 	updateNote({ commit }, updatedNote) {
 		http.put(`/notes/${updatedNote._id}`, updatedNote)
 			.then(res => {
-				commit('updateNotes', updatedNote)
+				commit('updateNotes', updatedNote);
 			})
 			.catch(err => {
 				console.log(err);

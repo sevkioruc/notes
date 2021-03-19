@@ -52,6 +52,7 @@ export default {
     },
     updateNote() {
       this.$store.dispatch("updateNote", this.note);
+      this.$bvModal.hide("noteModal");
     },
   },
   created() {
