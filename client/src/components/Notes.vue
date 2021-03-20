@@ -55,6 +55,9 @@ export default {
       this.$store.dispatch("removeNote", note);
     },
   },
+  created() {
+    this.$store.dispatch("fetchNotes");
+  },
 };
 </script>
 

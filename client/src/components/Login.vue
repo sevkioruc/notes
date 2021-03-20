@@ -42,7 +42,6 @@ export default {
     onSubmit(event) {
       event.preventDefault();
       this.$store.dispatch("login", { ...this.form }).then(() => {
-        this.$store.dispatch("fetchNotes");
         this.$router.push("/notes");
       });
     },

@@ -13,12 +13,7 @@ export default {
     Navbar,
   },
   created() {
-    const token = localStorage.getItem("token");
-
     this.$store.dispatch("initAuth");
-    if (token) {
-      this.$store.dispatch("fetchNotes");
-    }
   },
 };
 </script>

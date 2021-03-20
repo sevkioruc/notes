@@ -7,9 +7,7 @@ const state = {
 
 const mutations = {
 	addNotes(state, notes) {
-		notes.forEach(note => {
-			state.notes.push(note);
-		})
+		state.notes = [...notes]
 	},
 	updateNotes(state, updatedNote) {
 		const noteIndex = state.notes.findIndex(note => note._id === updatedNote._id);
