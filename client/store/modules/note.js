@@ -6,10 +6,10 @@ const state = {
 };
 
 const mutations = {
-	addNotes(state, notes) {
+	getNotes(state, notes) {
 		state.notes = [...notes]
 	},
-	updateNotes(state, updatedNote) {
+	updateNote(state, updatedNote) {
 		const noteIndex = state.notes.findIndex(note => note._id === updatedNote._id);
 		if (noteIndex !== -1) {
 			state.notes[noteIndex].title = updatedNote.title;
@@ -21,6 +21,9 @@ const mutations = {
 		if (noteIndex !== -1) {
 			state.notes.splice(noteIndex, 1);
 		}
+	},
+	addNote(state, note) {
+		state.notes.push(note);
 	}
 
 };
@@ -35,7 +38,7 @@ const actions = {
 	fetchNotes({ commit }) {
 		http.get('/notes')
 			.then((res) => {
-				commit('addNotes', res.data);
+				commit('getNotes', res.data);
 			})
 			.catch((err) => {
 				console.log(err);
@@ -44,7 +47,7 @@ const actions = {
 	saveNote({ commit }, note) {
 		http.post('/notes', note)
 			.then(res => {
-				commit('addNotes', res.data)
+				commit('addNote', res.data)
 			})
 			.catch(err => {
 				console.log(err);
@@ -53,7 +56,7 @@ const actions = {
 	updateNote({ commit }, updatedNote) {
 		http.put(`/notes/${updatedNote._id}`, updatedNote)
 			.then(res => {
-				commit('updateNotes', updatedNote);
+				commit('updateNote', updatedNote);
 			})
 			.catch(err => {
 				console.log(err);
