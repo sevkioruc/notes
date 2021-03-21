@@ -1,6 +1,6 @@
 const Note = require('../models/Note');
 const verifyToken = require('../middlewares/verifyToken');
-const { clearHash } = require('../services/cache');
+const cleanCache = require('../middlewares/cleanCache');
 
 module.exports = app => {
 	app.get('/notes', verifyToken, async (req, res) => {
@@ -25,7 +25,7 @@ module.exports = app => {
 		}
 	});
 
-	app.post('/notes', verifyToken, async (req, res) => {
+	app.post('/notes', verifyToken, cleanCache, async (req, res) => {
 		const { title, content } = req.body;
 
 		const note = new Note({
@@ -44,10 +44,9 @@ module.exports = app => {
 			});
 		}
 
-		clearHash(req.user.userId);
 	});
 
-	app.put('/notes/:id', verifyToken, (req, res) => {
+	app.put('/notes/:id', verifyToken, cleanCache, (req, res) => {
 		const { title, content } = req.body;
 		Note.updateOne({ _id: req.params.id, user: req.user.userId }, { title, content })
 			.then(result => {
@@ -64,7 +63,7 @@ module.exports = app => {
 			})
 	});
 
-	app.delete('/notes/:id', verifyToken, (req, res) => {
+	app.delete('/notes/:id', verifyToken, cleanCache, (req, res) => {
 		Note.deleteOne({ _id: req.params.id, user: req.user.userId })
 			.then(result => {
 				if (result.n > 0) {
