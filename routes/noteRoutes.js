@@ -1,17 +1,13 @@
 const Note = require('../models/Note');
 const verifyToken = require('../middlewares/verifyToken');
+const { clearHash } = require('../services/cache');
 
 module.exports = app => {
 	app.get('/notes', verifyToken, async (req, res) => {
-		try {
-			const notes = await Note.find({ user: req.user.userId });
-			res.status(200).json(notes);
-		}
-		catch (err) {
-			res.json({
-				message: 'Could not get Notes'
-			})
-		}
+		const notes = await Note
+			.find({ user: req.user.userId })
+			.cache({ key: req.user.userId });
+		res.status(200).json(notes);
 	});
 
 	app.get('/notes/:id', verifyToken, async (req, res) => {
@@ -47,6 +43,8 @@ module.exports = app => {
 				message: 'Could not create note'
 			});
 		}
+
+		clearHash(req.user.userId);
 	});
 
 	app.put('/notes/:id', verifyToken, (req, res) => {

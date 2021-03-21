@@ -4,6 +4,8 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const dotenv = require('dotenv');
 
+require('./services/cache');
+
 dotenv.config();
 
 const app = express();
