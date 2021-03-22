@@ -1,5 +1,5 @@
 <template>
-  <b-navbar toggleable="lg" type="dark" variant="info">
+  <b-navbar toggleable="lg" type="dark" class="navbar">
     <b-navbar-nav>
       <b-nav-item to="/notes">Notes</b-nav-item>
     </b-navbar-nav>
@@ -37,9 +37,21 @@ export default {
         "d-none": !this.$store.getters.isAuthenticated,
       };
     },
+    variant() {
+      return {
+        "background-color": "#563d7c",
+      };
+    },
   },
 };
 </script>
 
 <style>
+.navbar {
+  background-color: #6f42c1 !important;
+}
+a {
+  color: white !important;
+  font-size: 18px !important;
+}
 </style>
