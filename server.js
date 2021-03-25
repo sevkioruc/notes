@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const dotenv = require('dotenv');
+const serveStatic = require('serve-static');
 
 require('./services/cache');
 
@@ -27,6 +28,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 require('./routes/authRoutes')(app);
 require('./routes/noteRoutes')(app);
+
+app.use(serveStatic(`${__dirname}/client` + "/dist"));
 
 const port = process.env.PORT || 5000;
 

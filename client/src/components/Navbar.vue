@@ -6,7 +6,7 @@
     <b-collapse id="nav-collapse" is-nav>
       <b-navbar-nav class="ml-auto">
         <b-navbar-nav>
-          <b-nav-item to="/login" :class="loginAndRegisterClass"
+          <b-nav-item to="/login" class="login" :class="loginAndRegisterClass"
             >Login</b-nav-item
           >
           <b-nav-item to="/register" :class="loginAndRegisterClass"
