@@ -2,7 +2,7 @@
   <b-container fluid>
     <b-col>
       <b-row class="mt-3" align-h="end">
-        <b-button v-b-modal.noteModal>Create</b-button>
+        <b-button v-b-modal.noteModal class="create">Create</b-button>
         <CreateNoteDialog />
       </b-row>
       <b-row class="mt-3">

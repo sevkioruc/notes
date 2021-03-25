@@ -12,7 +12,9 @@
           <b-nav-item to="/register" :class="loginAndRegisterClass"
             >Register</b-nav-item
           >
-          <b-nav-item :class="logoutClass" @click="logout">Logout</b-nav-item>
+          <b-nav-item class="logout" :class="logoutClass" @click="logout"
+            >Logout</b-nav-item
+          >
         </b-navbar-nav>
       </b-navbar-nav>
     </b-collapse>

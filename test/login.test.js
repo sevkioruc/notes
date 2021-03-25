@@ -14,6 +14,17 @@ test('We can launch a browser', async () => {
 	expect(text).toEqual('Login');
 });
 
+test('Should be authenticat user', async () => {
+	await page.type("input[type='email']", 'sevkioruc@g.com');
+	await page.type("input[type='password']", '123456789');
+
+	await page.click(".btn-primary");
+
+	await page.waitForSelector(".btn-secondary");
+	const text = await page.$eval('.btn-secondary', el => el.innerText);
+	expect(text).toEqual('Create');
+});
+
 afterEach(async () => {
 	await browser.close();
 });
