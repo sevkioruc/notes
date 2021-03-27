@@ -1,5 +1,6 @@
 const puppeteer = require('puppeteer');
 const { login } = require('./util/login');
+const { createNote } = require('./util/note');
 
 let browser, page;
 beforeEach(async () => {
@@ -29,16 +30,10 @@ test('Should be able save new note', async () => {
 
 	const previousNotes = await page.$$('.card');
 
-	await page.click(".create");
-
-	await page.waitForSelector(".title");
-
-	await page.type('.title', 'Note was created by Puppeteer');
-	await page.type('.note-area', 'Dummy note content');
-
-	await page.click(".save-btn");
+	await createNote(page);
 
 	await page.waitForTimeout(2000);
+
 	const currentNotes = await page.$$('.card');
 
 	expect(currentNotes.length - previousNotes.length).toEqual(1);
