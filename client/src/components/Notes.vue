@@ -13,7 +13,7 @@
             header-border-variant="secondary"
             class="text-center note-wrapper"
           >
-            <b-row class="mt-3">
+            <b-row class="mt-3 content">
               {{ note.content }}
             </b-row>
             <b-row class="button-wrapper">

@@ -1,6 +1,6 @@
 const puppeteer = require('puppeteer');
 const { login } = require('./util/login');
-const { createNote } = require('./util/note');
+const { createNote, updateNote } = require('./util/note');
 
 let browser, page;
 beforeEach(async () => {
@@ -62,6 +62,20 @@ test('Should correctly selected note detail', async () => {
 
 	expect(titleValue).toEqual('Note was created by Puppeteer');
 	expect(contentValue).toEqual('Dummy note content');
+});
+
+test('Should user be able to update the note', async () => {
+	await login(page);
+
+	await updateNote(page);
+
+	await page.waitForTimeout(2000);
+
+	const updatedTitleValue = await page.$eval('.card-header', el => el.innerText);
+	const updatedContentValue = await page.$eval('.content', el => el.innerText);
+
+	expect(updatedTitleValue).toEqual('Updated note title');
+	expect(updatedContentValue).toEqual('Updated note content');
 });
 
 afterEach(async () => {
