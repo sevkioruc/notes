@@ -24,7 +24,10 @@
                 @click="updateNote(note)"
                 >Detail</b-button
               >
-              <b-button variant="danger" @click="removeNote(note)"
+              <b-button
+                class="remove-button"
+                variant="danger"
+                @click="removeNote(note)"
                 >Remove
               </b-button>
             </b-row>

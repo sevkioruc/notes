@@ -5,7 +5,7 @@ const { createNote, updateNote } = require('./util/note');
 let browser, page;
 beforeEach(async () => {
 	browser = await puppeteer.launch({
-		headless: false
+		headless: true
 	});
 	page = await browser.newPage();
 	await page.goto('http://localhost:3000');
@@ -76,6 +76,19 @@ test('Should user be able to update the note', async () => {
 
 	expect(updatedTitleValue).toEqual('Updated note title');
 	expect(updatedContentValue).toEqual('Updated note content');
+});
+
+test('Should user be able to remove the note', async () => {
+	await login(page);
+
+	await page.waitForSelector('.remove-button');
+	await page.click('.remove-button');
+
+	await page.waitForTimeout(2000);
+
+	const currentNotes = await page.$$('.card');
+
+	expect(currentNotes.length).toEqual(0);
 });
 
 afterEach(async () => {
