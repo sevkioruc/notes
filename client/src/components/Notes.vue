@@ -18,7 +18,7 @@
             </b-row>
             <b-row class="button-wrapper">
               <b-button
-                class="mr-2 edit-button"
+                class="mr-2 detail-button"
                 variant="warning"
                 v-b-modal.noteModal
                 @click="updateNote(note)"

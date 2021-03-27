@@ -8,16 +8,28 @@
     @hide="clearModal"
   >
     <template #modal-footer="{ ok }">
-      <b-button v-if="!isFromUptade" variant="danger" @click="ok()"
+      <b-button
+        class="save-btn"
+        v-if="!isFromUptade"
+        variant="danger"
+        @click="ok()"
         >Save</b-button
       >
-      <b-button v-if="isFromUptade" variant="info" @click="updateNote"
+      <b-button
+        class="update-btn"
+        v-if="isFromUptade"
+        variant="info"
+        @click="updateNote"
         >Update</b-button
       >
     </template>
     <b-col>
       <b-row class="mb-3">
-        <b-input placeholder="Title" v-model="note.title"></b-input>
+        <b-input
+          class="title"
+          placeholder="Title"
+          v-model="note.title"
+        ></b-input>
       </b-row>
       <b-row>
         <b-form-textarea
