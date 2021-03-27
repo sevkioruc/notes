@@ -1,4 +1,5 @@
 const puppeteer = require('puppeteer');
+const { login } = require('./util/login');
 
 let browser, page;
 beforeEach(async () => {
@@ -10,10 +11,7 @@ beforeEach(async () => {
 });
 
 test('Should text equal to Save when opened note dialog for new note', async () => {
-	await page.type("input[type='email']", 'sevkioruc@g.com');
-	await page.type("input[type='password']", '123456789');
-
-	await page.click(".btn-primary");
+	await login(page);
 
 	await page.waitForSelector(".create");
 	await page.click(".create");
@@ -25,10 +23,7 @@ test('Should text equal to Save when opened note dialog for new note', async () 
 });
 
 test('Should be able save new note', async () => {
-	await page.type("input[type='email']", 'sevkioruc@g.com');
-	await page.type("input[type='password']", '123456789');
-
-	await page.click(".btn-primary");
+	await login(page);
 
 	await page.waitForSelector(".create");
 
@@ -50,10 +45,7 @@ test('Should be able save new note', async () => {
 });
 
 test('Should text equal to Update when clicked Detail button on note', async () => {
-	await page.type("input[type='email']", 'sevkioruc@g.com');
-	await page.type("input[type='password']", '123456789');
-
-	await page.click('.btn-primary');
+	await login(page);
 
 	await page.waitForSelector('.detail-button');
 	await page.click('.detail-button');
@@ -65,10 +57,7 @@ test('Should text equal to Update when clicked Detail button on note', async () 
 });
 
 test('Should correctly selected note detail', async () => {
-	await page.type("input[type='email']", 'sevkioruc@g.com');
-	await page.type("input[type='password']", '123456789');
-
-	await page.click('.btn-primary');
+	await login(page);
 
 	await page.waitForSelector('.detail-button');
 	await page.click('.detail-button');

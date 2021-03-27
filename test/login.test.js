@@ -1,4 +1,5 @@
 const puppeteer = require('puppeteer');
+const { login } = require('./util/login');
 
 let browser, page;
 beforeEach(async () => {
@@ -15,12 +16,10 @@ test('We can launch a browser', async () => {
 });
 
 test('Should be able authenticate user', async () => {
-	await page.type("input[type='email']", 'sevkioruc@g.com');
-	await page.type("input[type='password']", '123456789');
-
-	await page.click(".btn-primary");
+	await login(page);
 
 	await page.waitForSelector(".create");
+
 	const text = await page.$eval('.create', el => el.innerText);
 
 	expect(text).toEqual('Create');
