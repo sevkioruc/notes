@@ -11,7 +11,7 @@
             border-variant="primary"
             :header="note.title"
             header-border-variant="secondary"
-            class="text-center note-wrapper"
+            class="text-center note-wrapper mb-3"
           >
             <b-row class="mt-3 content">
               {{ note.content }}
