@@ -7,6 +7,7 @@ const state = {
 
 const mutations = {
 	getNotes(state, notes) {
+		notes.map(note => note.isSelected = false);
 		state.notes = [...notes]
 	},
 	updateNote(state, updatedNote) {

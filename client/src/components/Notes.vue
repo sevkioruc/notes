@@ -8,11 +8,15 @@
       <b-row class="mt-3">
         <b-col class="col-2" v-for="note in getNotes" :key="note.id">
           <b-card
-            border-variant="primary"
-            :header="note.title"
-            header-border-variant="secondary"
-            class="text-center note-wrapper mb-3"
+            :border-variant="note.isSelected ? 'danger' : 'primary'"
+            class="note-wrapper mb-3"
           >
+            <b-card-header
+              class="text-center border-1 note-header"
+              @click="toggleNote(note)"
+            >
+              <span>{{ note.title }}</span>
+            </b-card-header>
             <b-row class="mt-3 content">
               {{ note.content }}
             </b-row>
@@ -44,6 +48,11 @@ import { mapGetters } from "vuex";
 import EventBus from "../../event-bus";
 
 export default {
+  data() {
+    return {
+      selectedNotes: [],
+    };
+  },
   components: {
     CreateNoteDialog,
   },
@@ -57,6 +66,18 @@ export default {
     removeNote(note) {
       this.$store.dispatch("removeNote", note);
     },
+    toggleNote(note) {
+      if (!note.isSelected) {
+        note.isSelected = true;
+        this.selectedNotes.push(note);
+      } else {
+        note.isSelected = false;
+        const index = this.selectedNotes.findIndex((n) => n._id === note._id);
+        if (index !== -1) {
+          this.selectedNotes.splice(index, 1);
+        }
+      }
+    },
   },
   created() {
     this.$store.dispatch("fetchNotes");
@@ -65,6 +86,12 @@ export default {
 </script>
 
 <style>
+.card-header {
+  background-color: #fff;
+}
+.note-header {
+  cursor: pointer;
+}
 .note-wrapper {
   min-height: 400px;
   position: relative;
