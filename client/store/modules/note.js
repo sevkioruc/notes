@@ -27,7 +27,12 @@ const mutations = {
 		state.notes.push(note);
 	},
 	removeNotes(state, removedNotes) {
-
+		removedNotes.forEach(removedNote => {
+			const noteIndex = state.notes.findIndex(note => note._id === removedNote);
+			if (noteIndex !== -1) {
+				state.notes.splice(noteIndex, 1);
+			}
+		});
 	}
 
 };
@@ -78,7 +83,7 @@ const actions = {
 	removeNotes({ commit }, removedNotes) {
 		http.delete('/selectedNotes', { data: { selectedNotes: removedNotes } })
 			.then(res => {
-				console.log(res);
+				commit('removeNotes', removedNotes);
 			})
 			.catch(err => {
 				console.log(err);

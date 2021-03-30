@@ -92,6 +92,7 @@ export default {
     removeSelectedNotes() {
       const selectedNoteIDs = this.selectedNotes.map((note) => note._id);
       this.$store.dispatch("removeNotes", selectedNoteIDs);
+      this.selectedNotes = 0;
     },
   },
   created() {
