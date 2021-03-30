@@ -2,7 +2,15 @@
   <b-container fluid>
     <b-col>
       <b-row class="mt-3" align-h="end">
-        <b-button v-b-modal.noteModal class="create">Create</b-button>
+        <b-button
+          variant="danger"
+          class="mr-2"
+          @click="removeSelectedNotes"
+          :disabled="!hasSelectedNote"
+        >
+          Remove Notes
+        </b-button>
+        <b-button v-b-modal.noteModal>Create</b-button>
         <CreateNoteDialog />
       </b-row>
       <b-row class="mt-3">
@@ -58,6 +66,9 @@ export default {
   },
   computed: {
     ...mapGetters(["getNotes"]),
+    hasSelectedNote() {
+      return this.selectedNotes.length > 0;
+    },
   },
   methods: {
     updateNote(note) {
@@ -78,6 +89,7 @@ export default {
         }
       }
     },
+    removeSelectedNotes() {},
   },
   created() {
     this.$store.dispatch("fetchNotes");
