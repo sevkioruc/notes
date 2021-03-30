@@ -89,7 +89,10 @@ export default {
         }
       }
     },
-    removeSelectedNotes() {},
+    removeSelectedNotes() {
+      const selectedNoteIDs = this.selectedNotes.map((note) => note._id);
+      this.$store.dispatch("removeNotes", selectedNoteIDs);
+    },
   },
   created() {
     this.$store.dispatch("fetchNotes");

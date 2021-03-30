@@ -25,6 +25,9 @@ const mutations = {
 	},
 	addNote(state, note) {
 		state.notes.push(note);
+	},
+	removeNotes(state, removedNotes) {
+
 	}
 
 };
@@ -67,6 +70,15 @@ const actions = {
 		http.delete(`/notes/${removedNote._id}`)
 			.then(res => {
 				commit('removeNote', removedNote);
+			})
+			.catch(err => {
+				console.log(err);
+			})
+	},
+	removeNotes({ commit }, removedNotes) {
+		http.delete('/selectedNotes', { data: { selectedNotes: removedNotes } })
+			.then(res => {
+				console.log(res);
 			})
 			.catch(err => {
 				console.log(err);

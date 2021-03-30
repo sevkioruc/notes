@@ -76,4 +76,18 @@ module.exports = app => {
 			});
 	});
 
+	app.delete('/selectedNotes', verifyToken, cleanCache, (req, res) => {
+		Note.deleteMany({ user: req.user.userId, _id: { $in: req.body.selectedNotes } })
+			.then(result => {
+				if (result.n > 0) {
+					res.status(200).json({ message: 'Deleted Successfully' });
+				} else {
+					res.status(401).json({ message: 'Not authorized' });
+				}
+			})
+			.catch(err => {
+				res.status(500).json({ err });
+			});
+	});
+
 };
